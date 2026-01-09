@@ -1,0 +1,415 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
+      body {
+        font-family: 'Inter', sans-serif;
+        color: white;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 40px;
+        border-radius: 20px;
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1s ease-out forwards;
+        max-width: 500px;
+        width: 90%;
+      }
+
+      .center h1 {
+        font-size: 2.5rem;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        margin: 0;
+        color: white;
+      }
+
+      .center img {
+        max-width: 150px;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 24px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .btn i {
+        font-size: 1.2rem;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .start-video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+      }
+
+      .featured {
+        filter: blur(5px);
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        transition: filter 0.3s ease;
+      }
+
+      .bottom-text {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .bottom-text:hover {
+        color: white;
+      }
+
+      .update-log {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+      }
+
+      .update-log.show {
+        display: flex;
+      }
+
+      .log-content {
+        background: rgba(20, 20, 20, 0.8);
+        backdrop-filter: blur(20px);
+        padding: 30px;
+        border-radius: 20px;
+        color: white;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        position: relative;
+        max-height: 80vh;
+        overflow-y: auto;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .log-content h2 {
+        margin-top: 0;
+        font-size: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 10px;
+        text-align: center;
+      }
+
+      .log-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      .log-header img {
+        max-width: 50px;
+        height: auto;
+        border-radius: 8px;
+        animation: floatPulse 3s ease-in-out infinite;
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+      }
+
+      @keyframes floatPulse {
+        0% {
+          transform: translateY(0) scale(1);
+          filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        }
+        50% {
+          transform: translateY(-5px) scale(1.05);
+          filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+        }
+        100% {
+          transform: translateY(0) scale(1);
+          filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        }
+      }
+
+      .math-animate {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1px;
+      }
+
+      .log-header h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 1px;
+      }
+
+      .char {
+        display: inline-block;
+        min-width: 0.6em;
+        text-align: center;
+        transition: color 0.3s ease;
+      }
+
+      .char.flipping {
+        color: #00ffcc;
+        text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
+      }
+
+      .log-content ul {
+        padding-left: 20px;
+        margin-bottom: 0;
+      }
+
+      .log-content li {
+        margin-bottom: 10px;
+        line-height: 1.4;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.5);
+        transition: color 0.3s ease;
+      }
+
+      .close-btn:hover {
+        color: white;
+      }
+    </style>
+    <link href="css/boxicons.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <!-- Ad Banner -->
+    <div style="width: 728px; margin: 10px auto; position: absolute; top: 0; left: 0; right: 0; z-index: 1000">
+      <script type="text/javascript">
+        atOptions = {
+          key: '3fd75c9730e40f34c11b4b653c3c73f1',
+          format: 'iframe',
+          height: 90,
+          width: 728,
+          params: {},
+        }
+      </script>
+      <script type="text/javascript" src="js/invoke.js"></script>
+    </div>
+
+    <!-- Google Translate -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL },
+          'google_translate_element'
+        )
+      }
+    </script>
+    <script type="text/javascript" src="js/element.js"></script>
+
+    <!-- Background Video -->
+    <div class="featured" id="featured">
+      <video src="media/gms.mp4" class="start-video" autoplay="" muted="" loop="">
+        The video could not load
+      </video>
+    </div>
+
+    <!-- Main Content -->
+    <div class="center">
+      <img src="images/jmw.png" alt="Jordan's Logo">
+      <h1 class="math-animate">Jordan's Math Work v7.5.5</h1>
+
+      <div class="button-group">
+        <button class="btn" onclick="window.open('https://ubghub.org/?site=Jordan%26%23x27%3Bs+Math+Work', '_blank');">
+          <i class="bx bx-up-arrow-alt"></i> Vote for us on UBGHub! (big reward)
+        </button>
+        <button class="btn" onclick="window.open('https://dsc.gg/gnetwork', '_blank');">
+          <i class="bx bx-chat"></i> Join the Discord
+        </button>
+        <button class="btn" onclick="showUpdateLog()">
+          <i class="bx bx-list-ul"></i> Update Log
+        </button>
+        <button class="btn" onclick="showCreditLog()">
+          <i class="bx bx-info-circle"></i> Credits
+        </button>
+      </div>
+
+      <div class="bottom-text" onclick="window.location.href='/legalpage.html'">
+        � Galactic · v7.5.5 · 2025
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="updateLog" class="update-log">
+      <div class="log-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="hideUpdateLog()"><i class="bx bx-x"></i></span>
+        <div class="log-header">
+          <img src="images/jmw.png" alt="JMW Logo">
+          <h3 class="math-animate">Jordan's Math Work</h3>
+        </div>
+        <h2>Update Log v7.5.5</h2>
+        <ul>
+          <li>Fixed the Pr<span>o</span>xy (again)</li>
+          <li>Reverted the christmas theme.</li>
+          <li><strong>Introducing 'Ad Seasons'!</strong> For 1 week, you will have no ads, and then for 2 weeks you'll have ads!</li>
+          <li>Please upvote us on UBGHub for good rewards! (live link drops, etc)</li>
+          <li>Get ready for <strong>more exclusives</strong> for jordan's math work v7.6! (next update) (gorilla tag, vice city, raldi's crackhouse etc)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="creditLog" class="update-log">
+      <div class="log-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="hideCreditLog()"><i class="bx bx-x"></i></span>
+        <div class="log-header">
+          <img src="images/jmw.png" alt="JMW Logo">
+          <h3 class="math-animate">Jordan's Math Work</h3>
+        </div>
+        <h2>Credits</h2>
+        <ul>
+          <li>Bog/Truffled Team, 98corbins (my friends), gn-math, UGS Assets: Exclusive web ports brought to JMW</li>
+          <li>3kh0 assets; stuff used for cdn</li>
+          <li>Slqnt; Even more exclusive web ports!</li>
+          <li>Scramjet team: Scr@mj3t</li>
+          <li>TN Dev team: ULTR4V10L3T</li>
+          <li>Thatguy_Toji; The site</li>
+          <li><a href="https://bromine.pages.dev" target="_blank" style="color: white">Bromine Team</a>; Tabs System</li>
+          <li>Groq AI; Their AI</li>
+          <li>Carbon Owner (slayer): CSS Re-styling</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      let mainAnimated = false;
+      function animateMathText(element) {
+        if (!element) return;
+        const text = element.innerText;
+        element.innerHTML = '';
+        const chars = text.split('');
+        const mathChars = '0123456789+-*/=√πΣ'.split('');
+        
+        chars.forEach((char, i) => {
+          const span = document.createElement('span');
+          span.classList.add('char');
+          span.innerText = mathChars[Math.floor(Math.random() * mathChars.length)];
+          element.appendChild(span);
+          
+          let iterations = 0;
+          const maxIterations = 10 + i * 3;
+          const interval = setInterval(() => {
+            span.classList.add('flipping');
+            span.innerText = mathChars[Math.floor(Math.random() * mathChars.length)];
+            iterations++;
+            
+            if (iterations >= maxIterations) {
+              clearInterval(interval);
+              span.innerText = char;
+              span.classList.remove('flipping');
+            }
+          }, 50);
+        });
+      }
+
+      function showUpdateLog() {
+        const modal = document.getElementById('updateLog');
+        modal.classList.add('show');
+        animateMathText(modal.querySelector('.math-animate'));
+      }
+      function hideUpdateLog() {
+        document.getElementById('updateLog').classList.remove('show');
+        if (!mainAnimated) {
+          animateMathText(document.querySelector('.center .math-animate'));
+          mainAnimated = true;
+        }
+      }
+      function showCreditLog() {
+        const modal = document.getElementById('creditLog');
+        modal.classList.add('show');
+        animateMathText(modal.querySelector('.math-animate'));
+      }
+      function hideCreditLog() {
+        document.getElementById('creditLog').classList.remove('show')
+      }
+
+      // Close modals when clicking outside
+      window.onclick = function(event) {
+        if (event.target.classList.contains('update-log')) {
+          hideUpdateLog();
+          hideCreditLog();
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        showUpdateLog();
+      })
+    </script>
+  
+
+</body></html>
